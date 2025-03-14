@@ -1,66 +1,92 @@
 import random
-ceWord = ""
-player_win_count = 0
-computer_win_count = 0
-draw_count = 0
+counter = 1
 while True:
-    while True:
-        Playerentry = input("Rock, Paper or Scissors? ")
-        ce = random.randint(1, 3)
-        if Playerentry.lower() in ["rock", "r"]:
-            pe = 1
-            break
-        elif Playerentry.lower() in ["paper", "p"]:
-            pe = 2
-            break
-        elif Playerentry.lower() in ["scissors", "s"]:
-            pe = 3
-            break
-        else:
-            print("Invalid input")
-
-    if pe == ce:
-        end = "Draw"
-        draw_count += 1
-
-    elif ce == 1 and pe == 3:
-        end = "Computer"
-        Computer_win_count += 1
-    elif ce == 1 and pe == 2:
-        end = "Player"
-        player_win_count += 1
-
-    elif ce == 2 and pe == 1:
-        end = "Computer"
-        computer_win_count += 1
-    elif ce == 2 and pe == 3:
-        end = "Player"
-        player_win_count += 1
-
-    elif ce == 3 and pe == 1:
-        end = "Player"
-        player_win_count += 1
-    elif ce == 3 and pe == 2:
-        end = "Computer"
-        computer_win_count += 1
-
-    if ce == 1:
-        computer_choice_word = "Rock"
-    elif ce == 2:
-        computer_choice_word = "Paper"
+    length = input("(Numbers only) How long should the password be: ")
+    if not length.isdigit():
+        print("Invalid input")
     else:
-        computer_choice_word = "Scissors"
+        break
+password = []
+OptionsLetter = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
+                 "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+OptionsSpecial = ["!", "§", "$", "%", "&", "/", "?", "=", "#", "*", "+", "_"]
+OptionsNumbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+capitalize_chance = 0
 
-    print("The computer played", computer_choice_word)
-    print("And the winner is:", end)
-    print("The Computer won", computer_win_count, "matches")
-    print("The Player won", player_win_count, "matches")
-    print(draw_count, "Games were a draw")
-    while True:
-        again = input("(Yes or No) Would you like to play again? ")
-        if again.lower() in ["no", "n"]:
-            exit()
-        elif again.lower() not in ["yes", "y"]:
+
+while True:
+    lettersYN = input("Do you want letters? (Y or N) ")
+    if lettersYN == "Y":
+        LYN = 1
+        break
+    elif lettersYN == "N":
+        LYN = 0
+        break
+    else:
+        print("Invalid input")
+
+while True:
+    if lettersYN == "Y":
+        UYN = False
+        uppercaseYN = input("Do you want uppercase letters? (Y or N) ")
+        if uppercaseYN == "Y":
+            UYN = True
+            break
+        elif uppercaseYN == "N":
+            break
+        else:
             print("Invalid input")
+    else:
+        uppercaseYN = ""
+        UYN = False
+        break
+
+while True:
+    numbersYN = input("Do you want numbers? (Y or N) ")
+    if numbersYN == "Y":
+        NYN = 2
+        break
+    elif numbersYN == "N":
+        NYN = 0
+        break
+    else:
+        print("Invalid input")
+
+while True:
+    specialsYN = input("Do you want special characters? (Y or N) ")
+    if specialsYN == "Y":
+        SYN = 3
+        break
+    elif specialsYN == "N":
+        SYN = 0
+        if LYN + NYN + SYN == 0:
+            print("Invalid input no gerneartion possible")
         else:
             break
+    else:
+        print("Invalid input")
+
+Customs = [SYN, NYN, LYN]
+Customs = [c for c in Customs if c != 0]
+
+while counter <= int(length):
+    category_choice = random.choice(Customs)
+    if category_choice == 1:
+        if bool(UYN == True):
+            capitalize_chance = random.randint(1, 3)
+            if capitalize_chance == 3:
+                cap_words = [word.capitalize() for word in OptionsLetter]
+                password.append(random.choice(cap_words))
+            else:
+                password.append(random.choice(OptionsLetter))
+        else:
+            password.append(random.choice(OptionsLetter))
+    elif category_choice == 2:
+        password.append(random.choice(OptionsNumbers))
+    elif category_choice == 3:
+        password.append(random.choice(OptionsSpecial))
+    counter += 1
+
+pw = "".join(password)
+print("Your random password is:", pw)
+exit()
