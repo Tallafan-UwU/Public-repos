@@ -1,0 +1,29 @@
+rounds = 1
+start_rounds = 1
+Zellen = []
+
+for i in range(100):
+    Zellen.append(0)
+
+
+for i in range(100):
+    rounds = start_rounds
+    for j in range(100):
+
+        end_Zellen_str = [str(i) for i in Zellen]
+        end_zellen = "".join(end_Zellen_str)
+        print("The test list is     : ", end_zellen, start_rounds, rounds)
+
+        if rounds >= len(Zellen):
+            break
+        if Zellen[rounds] == 0:
+            Zellen[rounds] = 1
+        else:
+            Zellen[rounds] = 0
+
+        rounds += (start_rounds +1)
+    start_rounds += 1
+
+
+offene_tueren = [index + 1 for index, status in enumerate(Zellen) if status == 0]
+print("The list is     : ", offene_tueren)
